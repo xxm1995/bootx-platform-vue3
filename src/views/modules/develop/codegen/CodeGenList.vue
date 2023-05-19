@@ -21,7 +21,7 @@
           <template #default="{ row }">
             <!--          <a href="javascript:" @click="previewShow(row)">预览</a>-->
             <!--          <a-divider type="vertical" />-->
-            <a href="javascript:" @click="generateShow(model.queryParam['dataSourceCode'], row)">生成</a>
+            <a href="javascript:" @click="generateShow(model.queryParam.dataSourceCode, row)">生成</a>
           </template>
         </vxe-column>
       </vxe-table>
@@ -55,12 +55,12 @@
   const xTable = $ref<VxeTableInstance>()
   const xToolbar = $ref<VxeToolbarInstance>()
   let codeGenForm = $ref<any>()
-  let optionTest = $ref([] as DataSource[])
+  let dataSources = $ref([] as DataSource[])
 
   const fields = [
     { field: 'tableName', type: STRING, name: '名称', placeholder: '请输入表名称' },
     { field: 'tableComment', type: STRING, name: '描述', placeholder: '请输入表描述' },
-    { field: 'dataSourceCode', type: LIST, name: '数据库源', placeholder: '选择所需数据源', selectList: optionTest },
+    { field: 'dataSourceCode', type: LIST, name: '数据库源', placeholder: '选择所需数据源', selectList: dataSources },
   ] as QueryField[]
 
   onMounted(() => {
@@ -72,11 +72,12 @@
     xTable?.connect(xToolbar as VxeToolbarInstance)
   }
 
-  // 数据源列表获取
+  // 初始化和获取数据源列表
   function initDataSource() {
+    model.queryParam.dataSourceCode = 'master'
     findAllDataSource().then(({ data }) => {
       data.forEach((item) => {
-        optionTest.push({ label: item.key, value: item.key })
+        dataSources.push({ label: item.key, value: item.key })
       })
     })
   }

@@ -1,6 +1,6 @@
 <template>
   <basic-drawer forceRender showFooter v-bind="$attrs" :title="title + ' 列表'" width="60%" :visible="visible" @close="visible = false">
-    <vxe-toolbar ref="xToolbar" custom :refresh="{ query: query }">
+    <vxe-toolbar ref="xToolbar" custom :refresh="{ queryMethod: query }">
       <template #buttons>
         <a-space>
           <a-button type="primary" pre-icon="ant-design:plus-outlined" @click="add">新建</a-button>
@@ -84,6 +84,7 @@
       tableData = data
       loading = false
     })
+    return Promise.resolve()
   }
   function add() {
     bpmModelNodeEdit.init('', FormEditType.Add)
