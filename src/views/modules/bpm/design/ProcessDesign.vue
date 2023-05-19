@@ -100,15 +100,14 @@
 
   import '/@/components/Bpmn/icon/iconfont.css'
 
-  import { ref } from 'vue'
   import Icon from '/@/components/Icon'
   import CodeEditor from '/@/components/CodeEditor/src/CodeEditor.vue'
   import ProcessPanel from './ProcessPanel.vue'
   import { MODE } from '/@/components/CodeEditor'
   import BasicModal from '/@/components/Modal/src/BasicModal.vue'
   import useProcessDesign from '/@/views/modules/bpm/design/useProcessDesign'
-  import { $ref } from '@vue-macros/reactivity-transform/macros'
-  import BasicDrawer from '/@/components/Drawer/src/BasicDrawer.vue'
+  import { $ref } from 'vue/macros'
+  import { ref } from 'vue'
 
   // 挂载元素
   let canvas = ref<any>()

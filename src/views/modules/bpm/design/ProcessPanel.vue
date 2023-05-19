@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { $ref } from '@vue-macros/reactivity-transform/macros'
+  import { $ref } from 'vue/macros'
 
   let nodeName = $ref<string>()
   let getComponent = $ref<any>()

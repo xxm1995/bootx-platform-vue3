@@ -1,5 +1,5 @@
 import Modeler from 'bpmn-js/lib/Modeler'
-import { $ref } from '@vue-macros/reactivity-transform/macros'
+import { $ref } from 'vue/macros'
 import customTranslate from '/@/components/Bpmn/common/customTranslate'
 import { nextTick } from 'vue'
 import { getInitBpmnData } from '/@/components/Bpmn/flowable/designData'
