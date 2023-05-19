@@ -20,3 +20,17 @@
 演示地址: [地址](http://v3.platform.bootx.cn/)
 
 使用Vue3 + Vite + TS进行构建开发
+
+## 常见问题
+出现以下错误不用管，不影响使用，只在第一次启动时出现，之后就不会再出现
+```shell
+ ERROR  Error: The following dependencies are imported but could not be resolved:                                                                                         10:06:39
+
+  @vue-macros/reactivity-transform/macros (imported by C:/bootx/dax-pay-ui/src/components/Bootx/SuperQuery/SuperQueryItem.vue?id=0)
+
+Are they installed?
+    at file:///C:/bootx/dax-pay-ui/node_modules/.pnpm/vite@4.3.5_jmirrwlmbumocpj2mhzxorzq7e/node_modules/vite/dist/node/chunks/dep-934dbc7c.js:44152:23
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async file:///C:/bootx/dax-pay-ui/node_modules/.pnpm/vite@4.3.5_jmirrwlmbumocpj2mhzxorzq7e/node_modules/vite/dist/node/chunks/dep-934dbc7c.js:43561:38
+
+```
