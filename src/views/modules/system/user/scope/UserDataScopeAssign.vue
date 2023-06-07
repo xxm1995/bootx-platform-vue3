@@ -42,10 +42,7 @@
   import { LabeledValue } from 'ant-design-vue/lib/select'
   import { nextTick } from 'vue'
   import { dropdownTranslate } from '/@/utils/dataUtil'
-  import {
-    addUserDataScope,
-    getDataScopeIdByUser
-  } from "/@/views/modules/system/user/UserAssign.api";
+  import { addUserDataScope, getDataScopeIdByUser } from '/@/views/modules/system/user/UserAssign.api'
   import BasicModal from '/@/components/Modal/src/BasicModal.vue'
   import { findAll as dataScopeList } from '/@/views/modules/system/scope/DataScope.api'
 
