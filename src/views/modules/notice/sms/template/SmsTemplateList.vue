@@ -13,40 +13,24 @@
       </vxe-toolbar>
       <vxe-table row-id="id" ref="xTable" :data="pagination.records" :loading="loading">
         <vxe-column type="seq" width="60" />
-        <vxe-column field="name" title="表单名称" />
-        <vxe-column field="code" title="表单编码" />
-        <vxe-column field="remark" title="备注" />
+        <vxe-column field="supplierType" title="短信渠道商类型" />
+        <vxe-column field="templateId" title="短信渠道商类型" />
+        <vxe-column field="name" title="短信模板名称" />
+        <vxe-column field="content" title="短信模板内容" />
         <vxe-column field="createTime" title="创建时间" />
-        <vxe-column fixed="right" width="240" :showOverflow="false" title="操作">
+        <vxe-column fixed="right" width="150" :showOverflow="false" title="操作">
           <template #default="{ row }">
             <span>
-              <a href="javascript:" @click="show(row)">查看</a>
+              <a-link @click="show(row)">查看</a-link>
             </span>
             <a-divider type="vertical" />
             <span>
-              <a href="javascript:" @click="edit(row)">编辑</a>
+              <a-link @click="edit(row)">编辑</a-link>
             </span>
             <a-divider type="vertical" />
             <span>
-              <a href="javascript:" @click="design(row.id)">表单设计</a>
+              <a-link danger @click="remove(row)">删除</a-link>
             </span>
-            <a-divider type="vertical" />
-            <a-dropdown>
-              <a> 更多 <icon icon="ant-design:down-outlined" :size="12" /> </a>
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item>
-                    <a href="javascript:" @click="preview(row.id)">预览表单</a>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <a href="javascript:">配置地址</a>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <a href="javascript:" @click="remove(row)" style="color: red">删除</a>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
           </template>
         </vxe-column>
       </vxe-table>
@@ -58,53 +42,49 @@
         :total="pagination.total"
         @page-change="handleTableChange"
       />
-      <dynamic-form-edit ref="dynamicFormEdit" @ok="queryPage" />
-      <dynamic-design ref="dynamicDesign" />
-      <dynamic-preview ref="dynamicPreview" />
+      <sms-template-edit ref="smsTemplateEdit" @ok="queryPage" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref } from 'vue'
+  import { onMounted } from 'vue'
   import { $ref } from 'vue/macros'
-  import { del, page } from './DynamicForm.api'
+  import { del, page } from './SmsTemplate.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
-  import DynamicFormEdit from './DynamicFormEdit.vue'
-  import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
+  import SmsTemplateEdit from './SmsTemplateEdit.vue'
+  import { VxeTableInstance, VxeToolbarInstance, VxeTable, VxeColumn, VxePager, VxeToolbar } from 'vxe-table'
   import BQuery from '/@/components/Bootx/Query/BQuery.vue'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
   import { QueryField } from '/@/components/Bootx/Query/Query'
-  import DynamicDesign from '/@/views/modules/develop/dynamicform/DynamicDesign.vue'
-  import DynamicPreview from '/@/views/modules/develop/dynamicform/DynamicPreview.vue'
-  import Icon from '/@/components/Icon/src/Icon.vue'
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
-  const { notification, createConfirm } = useMessage()
+  const { notification, createMessage, createConfirm } = useMessage()
 
   // 查询条件
-  const fields = [
-    { field: 'code', type: 'string', name: '编码', placeholder: '请输入编码' },
-    { field: 'name', type: 'string', name: '名称', placeholder: '请输入名称' },
-  ] as QueryField[]
+  const fields = [] as QueryField[]
 
   const xTable = $ref<VxeTableInstance>()
   const xToolbar = $ref<VxeToolbarInstance>()
-  const dynamicFormEdit = $ref<any>()
-  const dynamicDesign = $ref<any>()
-  const dynamicPreview = $ref<any>()
+  const smsTemplateEdit = $ref<any>()
 
   onMounted(() => {
     vxeBind()
     queryPage()
   })
+
+  /**
+   * 初始化绑定
+   */
   function vxeBind() {
     xTable?.connect(xToolbar as VxeToolbarInstance)
   }
 
-  // 分页查询
+  /**
+   * 分页查询
+   */
   function queryPage() {
     loading.value = true
     page({
@@ -115,37 +95,26 @@
     })
     return Promise.resolve()
   }
+
   /**
    * 新增
    */
   function add() {
-    dynamicFormEdit.init(null, FormEditType.Add)
+    smsTemplateEdit.init(null, FormEditType.Add)
   }
+
   /**
    * 编辑
    */
   function edit(record) {
-    dynamicFormEdit.init(record.id, FormEditType.Edit)
+    smsTemplateEdit.init(record.id, FormEditType.Edit)
   }
+
   /**
    * 查看
    */
   function show(record) {
-    dynamicFormEdit.init(record.id, FormEditType.Show)
-  }
-
-  /**
-   * 设计
-   */
-  function design(id) {
-    dynamicDesign.init(id)
-  }
-  /**
-   * 预览
-   */
-  function preview(id) {
-    console.log(12)
-    dynamicPreview.init(id)
+    smsTemplateEdit.init(record.id, FormEditType.Show)
   }
 
   /**
@@ -155,10 +124,10 @@
     createConfirm({
       iconType: 'warning',
       title: '警告',
-      content: '是否删除该表单',
+      content: '是否删除该数据',
       onOk: () => {
         del(record.id).then(() => {
-          notification.success({ message: '删除成功' })
+          createMessage.success('删除成功')
           queryPage()
         })
       },

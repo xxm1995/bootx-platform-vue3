@@ -20,25 +20,17 @@
       <a-form-item label="主键" name="id" :hidden="true">
         <a-input v-model:value="form.id" :disabled="showable" />
       </a-form-item>
-      <a-form-item label="名称" name="name">
-        <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入名称" />
+      <a-form-item label="短信渠道商类型" name="supplierType">
+        <a-input v-model:value="form.supplierType" :disabled="showable" placeholder="请输入短信渠道商类型" />
       </a-form-item>
-      <a-form-item label="流程类型" name="modelType">
-        <a-input v-model:value="form.modelType" :disabled="showable" placeholder="请输入流程类型" />
+      <a-form-item label="短信渠道商类型" name="templateId">
+        <a-input v-model:value="form.templateId" :disabled="showable" placeholder="请输入短信渠道商类型" />
       </a-form-item>
-      <a-form-item label="关联表单" name="formId">
-        <a-select
-          :disabled="showable"
-          allowClear
-          v-model:value="form.formId"
-          :filter-option="search"
-          :options="dynamicFormList"
-          style="width: 100%"
-          placeholder="选择关联表单"
-        />
+      <a-form-item label="短信模板名称" name="name">
+        <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入短信模板名称" />
       </a-form-item>
-      <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="form.remark" :disabled="showable" placeholder="请输入备注" />
+      <a-form-item label="短信模板内容" name="content">
+        <a-input v-model:value="form.content" :disabled="showable" placeholder="请输入短信模板内容" />
       </a-form-item>
     </a-form>
     <template #footer>
@@ -51,16 +43,13 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive } from "vue";
+  import { nextTick, reactive } from 'vue'
   import { $ref } from 'vue/macros'
   import useFormEdit from '/@/hooks/bootx/useFormEdit'
-  import { add, get, update, BpmModel } from './Model.api'
+  import { add, get, update, SmsTemplate } from './SmsTemplate.api'
   import { FormInstance, Rule } from 'ant-design-vue/lib/form'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { BasicModal } from '/@/components/Modal'
-  import { findAll } from '/@/views/modules/develop/dynamicform/DynamicForm.api'
-  import { LabeledValue } from 'ant-design-vue/lib/select'
-  import { dropdownTranslate } from '/@/utils/dataUtil'
   const {
     initFormEditType,
     handleCancel,
@@ -77,40 +66,30 @@ import { nextTick, onMounted, reactive } from "vue";
   } = useFormEdit()
   // 表单
   const formRef = $ref<FormInstance>()
-  let dynamicFormList = $ref<LabeledValue[]>([])
-  let form = $ref({
+  let form = $ref<SmsTemplate>({
     id: null,
+    supplierType: '',
+    templateId: '',
     name: '',
-    modelType: '',
-    formId: null,
-    remark: '',
-  } as BpmModel)
+    content: '',
+  })
   // 校验
-  const rules = reactive({
-    name: [{ required: true, message: '请输入流程模型名称!' }],
-    modelType: [{ required: true, message: '请输入流程模型类型!' }],
-  } as Record<string, Rule[]>)
+  const rules = reactive({} as Record<string, Rule[]>)
   // 事件
   const emits = defineEmits(['ok'])
-  // 入口
+
+  /**
+   * 入口
+   */
   function init(id, editType: FormEditType) {
     initFormEditType(editType)
     resetForm()
     getInfo(id, editType)
   }
 
-  onMounted(() => {
-    initData()
-  })
-
-  // 初始化数据
-  function initData() {
-    findAll().then(({ data }) => {
-      dynamicFormList = dropdownTranslate(data, 'name', 'id')
-    })
-  }
-
-  // 获取信息
+  /**
+   * 获取信息
+   */
   function getInfo(id, editType: FormEditType) {
     if ([FormEditType.Edit, FormEditType.Show].includes(editType)) {
       confirmLoading.value = true
@@ -122,7 +101,10 @@ import { nextTick, onMounted, reactive } from "vue";
       confirmLoading.value = false
     }
   }
-  // 保存
+
+  /**
+   * 保存
+   */
   function handleOk() {
     formRef?.validate().then(async () => {
       confirmLoading.value = true
@@ -137,7 +119,9 @@ import { nextTick, onMounted, reactive } from "vue";
     })
   }
 
-  // 重置表单
+  /**
+   * 重置表单
+   */
   function resetForm() {
     nextTick(() => {
       formRef?.resetFields()
