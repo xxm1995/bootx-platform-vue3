@@ -65,20 +65,20 @@ export function del(id) {
  * 短信渠道配置
  */
 export interface SmsChannelConfig extends BaseEntity {
-  // 
+  // 渠道类型编码
   code?: string
-  // 
+  // 渠道类型名称
   name?: string
-  // 
+  // 状态
   state?: string
-  // 
+  // AccessKey
   accessKey?: string
-  // 
-  accessKeySecret?: string
-  // 
-  templateId?: string
-  // 
+  // AccessSecret
+  accessSecret?: string
+  // 配置
   config?: string
-  // 
+  // 图片
+  image?: string
+  // 备注
   remark?: string
 }
