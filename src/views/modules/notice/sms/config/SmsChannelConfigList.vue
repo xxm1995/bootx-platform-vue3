@@ -1,42 +1,44 @@
 <template>
-  <a-spin :spinning="confirmLoading" style="">
-    <a-list
-      style="margin-left: 20px; margin-top: 30px"
-      :grid="{ gutter: 16, xs: 1, sm: 2, md: 2, lg: 3, xl: 4, xxl: 5 }"
-      :data-source="configs"
-    >
-      <template #renderItem="{ item }">
-        <a-card hoverable style="width: 200px; margin-bottom: 50px">
-          <template #cover>
-            <a-image :preview="false" :src="urlPrefix + String(item?.img)" :fallback="fallbackImg" />
-          </template>
-          <a-card-meta :title="item.name">
-            <template #description>
-              <template v-if="item.state === 'normal'">
-                <a-badge dot color="green" />
-                <span style="color: green">已启用</span>
-              </template>
-              <template v-else-if="item.state === 'forbidden'">
-                <a-badge dot color="red" />
-                <span style="color: red">停用</span>
-              </template>
-              <template v-else>
-                <a-badge dot color="grey" />
-                <span style="color: grey">未配置</span>
-              </template>
+  <div class="m-3 p-3 pt-5 bg-white">
+    <a-spin :spinning="confirmLoading" style="">
+      <a-list
+        style="margin-left: 20px; margin-top: 30px"
+        :grid="{ gutter: 16, xs: 1, sm: 2, md: 2, lg: 3, xl: 4, xxl: 5 }"
+        :data-source="configs"
+      >
+        <template #renderItem="{ item }">
+          <a-card hoverable style="width: 200px; margin-bottom: 50px" @click="setting(item)">
+            <template #cover>
+              <a-image :preview="false" :src="urlPrefix + String(item?.imgage)" :fallback="fallbackImg" />
             </template>
-          </a-card-meta>
-        </a-card>
-      </template>
-    </a-list>
-  </a-spin>
+            <a-card-meta :title="item.name">
+              <template #description>
+                <template v-if="item.state === 'normal'">
+                  <a-badge dot color="green" />
+                  <span style="color: green">已启用</span>
+                </template>
+                <template v-else-if="item.state === 'forbidden'">
+                  <a-badge dot color="red" />
+                  <span style="color: red">停用</span>
+                </template>
+                <template v-else>
+                  <a-badge dot color="grey" />
+                  <span style="color: grey">未配置</span>
+                </template>
+              </template>
+            </a-card-meta>
+          </a-card>
+        </template>
+      </a-list>
+    </a-spin>
+  </div>
 </template>
 
 <script lang="ts" setup>
   import { onMounted } from 'vue'
   import { $ref } from 'vue/macros'
   import { useMessage } from '/@/hooks/web/useMessage'
-  import { SmsChannelConfig } from '/@/views/modules/notice/sms/config/SmsChannelConfig.api'
+  import { findAll, SmsChannelConfig } from '/@/views/modules/notice/sms/config/SmsChannelConfig.api'
   import { getFilePreviewUrlPrefix } from '/@/api/common/FileUpload'
 
   // 使用hooks
@@ -60,9 +62,20 @@
   async function init() {
     confirmLoading = true
     const urlPrefixResult = await getFilePreviewUrlPrefix()
+    findAll().then(({ data }) => {
+      configs = data
+    })
     urlPrefix = urlPrefixResult.data
     confirmLoading = false
   }
+
+  /**
+   * 设置
+   */
+  function setting(info: SmsChannelConfig){
+    console.log(info)
+  }
+
 </script>
 
 <style lang="less" scoped></style>

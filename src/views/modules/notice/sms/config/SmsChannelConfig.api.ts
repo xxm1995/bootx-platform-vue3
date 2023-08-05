@@ -7,7 +7,7 @@ import { BaseEntity } from '/#/web'
  */
 export function page(params) {
   return defHttp.get<Result<PageResult<SmsChannelConfig>>>({
-    url: '/sms/page',
+    url: '/sms/config/page',
     params,
   })
 }
@@ -17,7 +17,7 @@ export function page(params) {
  */
 export function findAll() {
   return defHttp.get<Result<SmsChannelConfig[]>>({
-    url: '/sms/findAll',
+    url: '/sms/config/findAll',
   })
 }
 
@@ -26,7 +26,7 @@ export function findAll() {
  */
 export function get(id) {
   return defHttp.get<Result<SmsChannelConfig>>({
-    url: '/sms/findById',
+    url: '/sms/config/findById',
     params: { id },
   })
 }
@@ -36,7 +36,7 @@ export function get(id) {
  */
 export function add(obj: SmsChannelConfig) {
   return defHttp.post({
-    url: '/sms/add',
+    url: '/sms/config/add',
     data: obj,
   })
 }
@@ -46,7 +46,7 @@ export function add(obj: SmsChannelConfig) {
  */
 export function update(obj: SmsChannelConfig) {
   return defHttp.post({
-    url: '/sms/update',
+    url: '/sms/config/update',
     data: obj,
   })
 }
@@ -56,7 +56,7 @@ export function update(obj: SmsChannelConfig) {
  */
 export function del(id) {
   return defHttp.delete({
-    url: '/sms/delete',
+    url: '/sms/config/delete',
     params: { id },
   })
 }
@@ -79,6 +79,8 @@ export interface SmsChannelConfig extends BaseEntity {
   config?: string
   // 图片
   image?: string
+  // 排序
+  sortNo?: number
   // 备注
   remark?: string
 }

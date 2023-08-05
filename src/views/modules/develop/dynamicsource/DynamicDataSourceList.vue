@@ -182,7 +182,7 @@
     createConfirm({
       iconType: 'warning',
       title: '删除',
-      content: '是否删除流程模型',
+      content: '是否删除动态表单',
       onOk: () => {
         loading.value = true
         del(record.id).then(() => {
