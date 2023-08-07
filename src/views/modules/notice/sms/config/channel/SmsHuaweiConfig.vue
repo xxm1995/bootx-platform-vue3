@@ -1,13 +1,5 @@
 <template>
-  <basic-drawer
-    showFooter
-    v-bind="$attrs"
-    width="60%"
-    title="阿里短信配置"
-    :visible="visible"
-    :maskClosable="false"
-    @close="handleCancel"
-  >
+  <basic-drawer showFooter v-bind="$attrs" width="60%" title="华为云短信配置" :visible="visible" :maskClosable="false" @close="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form
         class="small-from-item"
@@ -22,10 +14,10 @@
           <a-input v-model:value="form.id" :disabled="showable" />
         </a-form-item>
         <a-form-item label="AccessKey" name="accessKey">
-          <a-input v-model:value="form.accessKey" :disabled="showable" placeholder="请输入短信AccessKey" />
+          <a-input v-model:value="form.accessKey" :disabled="showable" placeholder="请输入阿里云短信AccessKey" />
         </a-form-item>
         <a-form-item label="AccessSecret" name="accessSecret">
-          <a-input v-model:value="form.accessSecret" :disabled="showable" placeholder="请输入短信AccessSecret" />
+          <a-input v-model:value="form.accessSecret" :disabled="showable" placeholder="请输入阿里云短信AccessSecret" />
         </a-form-item>
         <a-form-item label="启用状态" name="state">
           <a-switch
@@ -47,20 +39,14 @@
         <a-form-item label="模板ID" name="templateId">
           <a-input v-model:value="form.templateId" :disabled="showable" placeholder="请输入短信模板ID" />
         </a-form-item>
-        <a-form-item label="模板变量" name="templateName">
-          <a-input v-model:value="form.templateName" :disabled="showable" placeholder="请输入短信模板变量" />
+        <a-form-item label="通道号" name="sender">
+          <a-input v-model:value="form.sender" :disabled="showable" placeholder="请输入国内短信签名通道号" />
         </a-form-item>
-        <a-form-item label="请求地址" name="requestUrl">
-          <a-input v-model:value="form.requestUrl" :disabled="showable" placeholder="请输入短信请求地址" />
+        <a-form-item label="接收地" name="statusCallBack">
+          <a-input v-model:value="form.statusCallBack" :disabled="showable" placeholder="请输入短信状态报告接收地" />
         </a-form-item>
-        <a-form-item label="接口方法" name="action">
-          <a-input v-model:value="form.action" :disabled="showable" placeholder="请输入短信接口方法" />
-        </a-form-item>
-        <a-form-item label="接口版本号" name="version">
-          <a-input v-model:value="form.version" :disabled="showable" placeholder="请输入短信接口版本号" />
-        </a-form-item>
-        <a-form-item label="地域信息" name="regionId">
-          <a-input v-model:value="form.regionId" :disabled="showable" placeholder="请输入短信地域信息" />
+        <a-form-item label="接入地址" name="url">
+          <a-input v-model:value="form.url" :disabled="showable" placeholder="请输入APP接入地址" />
         </a-form-item>
 
         <a-form-item label="备注" name="remark">
@@ -209,8 +195,8 @@
    * 保存
    */
   function handleOk() {
-    form.code = smsChannelEnum.ALIBABA
-    form.name = '阿里短信'
+    form.code = smsChannelEnum.HUAWEI
+    form.name = '华为云云短信'
     formRef?.validate().then(async () => {
       confirmLoading.value = true
       if (formEditType.value === FormEditType.Add) {

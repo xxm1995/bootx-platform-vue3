@@ -3,7 +3,7 @@
     showFooter
     v-bind="$attrs"
     width="60%"
-    title="阿里短信配置"
+    title="亿美短信配置"
     :visible="visible"
     :maskClosable="false"
     @close="handleCancel"
@@ -41,26 +41,14 @@
           <a-input-number placeholder="请输入排序，可以是小数" :disabled="showable" v-model:value="form.sortNo" style="width: 200px" />
         </a-form-item>
 
-        <a-form-item label="短信签名" name="signature">
-          <a-input v-model:value="form.signature" :disabled="showable" placeholder="请输入短信签名" />
+        <a-form-item label="AppKey" name="appId">
+          <a-input v-model:value="form.appId" :disabled="showable" placeholder="请输入短信AppKey" />
         </a-form-item>
-        <a-form-item label="模板ID" name="templateId">
-          <a-input v-model:value="form.templateId" :disabled="showable" placeholder="请输入短信模板ID" />
+        <a-form-item label="SecretKey" name="secretKey">
+          <a-input v-model:value="form.secretKey" :disabled="showable" placeholder="请输入短信SecretKey" />
         </a-form-item>
-        <a-form-item label="模板变量" name="templateName">
-          <a-input v-model:value="form.templateName" :disabled="showable" placeholder="请输入短信模板变量" />
-        </a-form-item>
-        <a-form-item label="请求地址" name="requestUrl">
-          <a-input v-model:value="form.requestUrl" :disabled="showable" placeholder="请输入短信请求地址" />
-        </a-form-item>
-        <a-form-item label="接口方法" name="action">
-          <a-input v-model:value="form.action" :disabled="showable" placeholder="请输入短信接口方法" />
-        </a-form-item>
-        <a-form-item label="接口版本号" name="version">
-          <a-input v-model:value="form.version" :disabled="showable" placeholder="请输入短信接口版本号" />
-        </a-form-item>
-        <a-form-item label="地域信息" name="regionId">
-          <a-input v-model:value="form.regionId" :disabled="showable" placeholder="请输入短信地域信息" />
+        <a-form-item label="APP接入地址" name="requestUrl">
+          <a-input v-model:value="form.requestUrl" :disabled="showable" placeholder="请输入短信APP接入地址" />
         </a-form-item>
 
         <a-form-item label="备注" name="remark">
@@ -209,8 +197,8 @@
    * 保存
    */
   function handleOk() {
-    form.code = smsChannelEnum.ALIBABA
-    form.name = '阿里短信'
+    form.code = smsChannelEnum.EMAY
+    form.name = '亿美短信'
     formRef?.validate().then(async () => {
       confirmLoading.value = true
       if (formEditType.value === FormEditType.Add) {

@@ -7,7 +7,7 @@ import { BaseEntity } from '/#/web'
  */
 export function page(params) {
   return defHttp.get<Result<PageResult<SmsTemplate>>>({
-    url: '/sms/page',
+    url: '/sms/template/page',
     params,
   })
 }
@@ -17,7 +17,7 @@ export function page(params) {
  */
 export function findAll() {
   return defHttp.get<Result<SmsTemplate[]>>({
-    url: '/sms/findAll',
+    url: '/sms/template/findAll',
   })
 }
 
@@ -26,7 +26,7 @@ export function findAll() {
  */
 export function get(id) {
   return defHttp.get<Result<SmsTemplate>>({
-    url: '/sms/findById',
+    url: '/sms/template/findById',
     params: { id },
   })
 }
@@ -36,7 +36,7 @@ export function get(id) {
  */
 export function add(obj: SmsTemplate) {
   return defHttp.post({
-    url: '/sms/add',
+    url: '/sms/template/add',
     data: obj,
   })
 }
@@ -46,7 +46,7 @@ export function add(obj: SmsTemplate) {
  */
 export function update(obj: SmsTemplate) {
   return defHttp.post({
-    url: '/sms/update',
+    url: '/sms/template/update',
     data: obj,
   })
 }
@@ -56,7 +56,7 @@ export function update(obj: SmsTemplate) {
  */
 export function del(id) {
   return defHttp.delete({
-    url: '/sms/delete',
+    url: '/sms/template/delete',
     params: { id },
   })
 }
