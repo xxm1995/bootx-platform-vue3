@@ -12,12 +12,12 @@
 </template>
 
 <script lang="ts" setup>
+  import 'epic-designer/dist/style.css'
   import BasicModal from '/@/components/Modal/src/BasicModal.vue'
   import { EBuilder } from 'epic-designer'
   import useFormEdit from '/@/hooks/bootx/useFormEdit'
   import { $ref } from 'vue/macros'
   import { DynamicForm, get } from '/@/views/modules/develop/dynamicform/DynamicForm.api'
-  import { toStringJSON } from 'xe-utils'
 
   const {
     initFormEditType,

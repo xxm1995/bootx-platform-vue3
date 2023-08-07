@@ -7,6 +7,8 @@
 </template>
 
 <script lang="ts" setup>
+  import 'epic-designer/dist/style.css'
+
   import { EDesigner } from 'epic-designer'
   import { $ref } from 'vue/macros'
   import { DynamicForm, get } from './DynamicForm.api'
