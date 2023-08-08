@@ -63,8 +63,8 @@ async function bootstrap() {
   // add vxe-table
   useTable(app)
 
-  // 注册页面设计器
-  registerEpicDesigner()
+  // 注册页面设计器 影响打包, 等后续更新
+  // registerEpicDesigner()
 
   // https://next.router.vuejs.org/api/#isready
   // await router.isReady();
