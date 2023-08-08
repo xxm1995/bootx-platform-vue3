@@ -125,7 +125,12 @@
   let editType = $ref<FormEditType>()
   let rawForm: any = null
 
-  let form = $ref<SmsChannelConfig>({ sortNo: 0, state: 'normal' })
+  let form = $ref<any>({
+    sortNo: 0,
+    state: 'normal',
+    requestUrl: 'https://sms-global.ctapi.ctyun.cn/sms/api/v1',
+    action: 'SendSms',
+  })
 
   const rules = {
     accessKey: [{ required: true, message: '请输入短信AccessKey' }],

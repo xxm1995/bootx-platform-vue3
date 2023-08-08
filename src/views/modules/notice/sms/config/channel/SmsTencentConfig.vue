@@ -3,7 +3,7 @@
     showFooter
     v-bind="$attrs"
     width="60%"
-    title="腾讯短信配置"
+    title="腾讯云短信配置"
     :visible="visible"
     :maskClosable="false"
     @close="handleCancel"
@@ -134,7 +134,14 @@
   let editType = $ref<FormEditType>()
   let rawForm: any = null
 
-  let form = $ref<SmsChannelConfig>({ sortNo: 0, state: 'normal' })
+  let form = $ref<any>({ sortNo: 0, state: 'normal',
+    territory: 'ap-guangzhou',
+    connTimeout: 60,
+    requestUrl: 'sms.tencentcloudapi.com',
+    action: 'SendSms',
+    version: '2021-01-11',
+    service: 'sms',
+  })
 
   const rules = {
     accessKey: [{ required: true, message: '请输入短信AccessKey' }],

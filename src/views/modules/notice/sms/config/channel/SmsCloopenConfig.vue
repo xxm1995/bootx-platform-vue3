@@ -1,13 +1,5 @@
 <template>
-  <basic-drawer
-    showFooter
-    v-bind="$attrs"
-    width="60%"
-    title="容联短信配置"
-    :visible="visible"
-    :maskClosable="false"
-    @close="handleCancel"
-  >
+  <basic-drawer showFooter v-bind="$attrs" width="60%" title="容联短信配置" :visible="visible" :maskClosable="false" @close="handleCancel">
     <a-spin :spinning="confirmLoading">
       <a-form
         class="small-from-item"
@@ -122,7 +114,7 @@
   let editType = $ref<FormEditType>()
   let rawForm: any = null
 
-  let form = $ref<SmsChannelConfig>({ sortNo: 0, state: 'normal' })
+  let form = $ref<any>({ sortNo: 0, state: 'normal', baseUrl: 'https://app.cloopen.com:8883/2013-12-26' })
 
   const rules = {
     accessKey: [{ required: true, message: '请输入短信AccessKey' }],

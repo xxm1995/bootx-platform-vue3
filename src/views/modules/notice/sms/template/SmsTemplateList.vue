@@ -1,35 +1,27 @@
 <template>
   <div>
     <div class="m-3 p-3 pt-5 bg-white">
-      <b-query :query-params="model.queryParam" :fields="fields" @query="queryPage" @reset="resetQueryParams" />
+      <b-query :query-params="model.queryParam" :fields="fields" :default-item-count="4" @query="queryPage" @reset="resetQueryParams" />
     </div>
     <div class="m-3 p-3 bg-white">
       <vxe-toolbar ref="xToolbar" custom :refresh="{ queryMethod: queryPage }">
         <template #buttons>
           <a-space>
-            <a-button type="primary" pre-icon="ant-design:plus-outlined" @click="add">新建</a-button>
+            <a-button type="primary" pre-icon="ant-design:sync-outlined" @click="add">同步</a-button>
           </a-space>
         </template>
       </vxe-toolbar>
       <vxe-table row-id="id" ref="xTable" :data="pagination.records" :loading="loading">
         <vxe-column type="seq" width="60" />
-        <vxe-column field="supplierType" title="短信渠道商类型" />
-        <vxe-column field="templateId" title="短信渠道商类型" />
-        <vxe-column field="name" title="短信模板名称" />
-        <vxe-column field="content" title="短信模板内容" />
+        <vxe-column field="supplierType" title="短信渠道商" />
+        <vxe-column field="templateId" title="模板ID" />
+        <vxe-column field="name" title="模板名称" />
+        <vxe-column field="content" title="模板内容" />
         <vxe-column field="createTime" title="创建时间" />
         <vxe-column fixed="right" width="150" :showOverflow="false" title="操作">
           <template #default="{ row }">
             <span>
               <a-link @click="show(row)">查看</a-link>
-            </span>
-            <a-divider type="vertical" />
-            <span>
-              <a-link @click="edit(row)">编辑</a-link>
-            </span>
-            <a-divider type="vertical" />
-            <span>
-              <a-link danger @click="remove(row)">删除</a-link>
             </span>
           </template>
         </vxe-column>
@@ -48,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted } from 'vue'
+  import { computed, onMounted } from 'vue'
   import { $ref } from 'vue/macros'
   import { del, page } from './SmsTemplate.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
@@ -58,13 +50,29 @@
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
   import { QueryField } from '/@/components/Bootx/Query/Query'
+  import { dropdownTranslate } from '/@/utils/dataUtil'
+  import { findAll, SmsChannelConfig } from '/@/views/modules/notice/sms/config/SmsChannelConfig.api'
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
   const { notification, createMessage, createConfirm } = useMessage()
 
+  let configs = $ref<SmsChannelConfig[]>([])
+
   // 查询条件
-  const fields = [] as QueryField[]
+  const fields = computed(() => {
+    return [
+      {
+        name: '短信渠道商',
+        field: 'supplierType',
+        type: 'list',
+        placeholder: '请选择要查询的短信渠道商',
+        selectList: dropdownTranslate(configs, 'name', 'code'),
+      },
+      { name: '模板ID', field: 'templateId', type: 'string', placeholder: '请输入模板ID' },
+      { name: '模板名称', field: 'name', type: 'string', placeholder: '请输入模板名称' },
+    ] as QueryField[]
+  })
 
   const xTable = $ref<VxeTableInstance>()
   const xToolbar = $ref<VxeToolbarInstance>()
@@ -72,6 +80,7 @@
 
   onMounted(() => {
     vxeBind()
+    initData()
     queryPage()
   })
 
@@ -80,6 +89,15 @@
    */
   function vxeBind() {
     xTable?.connect(xToolbar as VxeToolbarInstance)
+  }
+
+  /**
+   * 初始化数据
+   */
+  function initData() {
+    findAll().then(({ data }) => {
+      configs = data
+    })
   }
 
   /**
@@ -100,14 +118,7 @@
    * 新增
    */
   function add() {
-    smsTemplateEdit.init(null, FormEditType.Add)
-  }
-
-  /**
-   * 编辑
-   */
-  function edit(record) {
-    smsTemplateEdit.init(record.id, FormEditType.Edit)
+    // smsTemplateEdit.init(null, FormEditType.Add)
   }
 
   /**

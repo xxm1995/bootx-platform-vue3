@@ -3,7 +3,7 @@
     showFooter
     v-bind="$attrs"
     width="60%"
-    title="亿美短信配置"
+    title="亿美软通短信配置"
     :visible="visible"
     :maskClosable="false"
     @close="handleCancel"
