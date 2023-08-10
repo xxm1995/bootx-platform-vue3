@@ -8,8 +8,9 @@
         <template #buttons>
           <a-space>
             <a-button type="primary" pre-icon="ant-design:plus-outlined" @click="add">新建</a-button>
-            <a-button pre-icon="ant-design:plus-outlined" @click="importData">导入</a-button>
+            <a-button pre-icon="ant-design:import-outlined" @click="importData">导入</a-button>
             <a-button pre-icon="ant-design:sync-outlined" @click="refreshAll">刷新缓存</a-button>
+            <a-button pre-icon="ant-design:form-outlined" @click="verify">测试</a-button>
           </a-space>
         </template>
       </vxe-toolbar>
@@ -56,6 +57,7 @@
         @page-change="handleTableChange"
       />
       <china-word-edit ref="chinaWordEdit" @ok="queryPage" />
+      <china-word-verify ref="chinaWordVerify" />
     </div>
   </div>
 </template>
@@ -71,6 +73,7 @@
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
   import { QueryField } from '/@/components/Bootx/Query/Query'
+  import ChinaWordVerify from './ChinaWordVerify.vue'
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
@@ -82,6 +85,7 @@
   const xTable = $ref<VxeTableInstance>()
   const xToolbar = $ref<VxeToolbarInstance>()
   const chinaWordEdit = $ref<any>()
+  const chinaWordVerify = $ref<any>()
 
   onMounted(() => {
     vxeBind()
@@ -128,6 +132,13 @@
    */
   function edit(record) {
     chinaWordEdit.init(record.id, FormEditType.Edit)
+  }
+
+  /**
+   * 测试敏感词
+   */
+  function verify() {
+    chinaWordVerify.init()
   }
 
   /**

@@ -61,6 +61,16 @@ export function refresh() {
 }
 
 /**
+ * 更新
+ */
+export function verify(obj: any) {
+  return defHttp.post({
+    url: '/chinaword/verify',
+    data: obj,
+  })
+}
+
+/**
  * 删除
  */
 export function del(id) {
@@ -83,5 +93,5 @@ export interface ChinaWord extends BaseEntity {
   // 是否启用
   enable?: boolean
   // 是否是白名单
-  white?: boolean|string
+  white?: boolean | string
 }
