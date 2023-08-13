@@ -79,6 +79,15 @@ export function del(id) {
     params: { id },
   })
 }
+/**
+ * 批量删除
+ */
+export function deleteBatch(ids) {
+  return defHttp.delete({
+    url: '/chinaword/deleteBatch',
+    params: ids,
+  })
+}
 
 /**
  * 敏感词黑名单

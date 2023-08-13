@@ -177,12 +177,16 @@
     })
     return Promise.resolve()
   }
-  // 选中全部
+  /**
+   * 选中全部
+   */
   function selectAllEvent() {
     const records = xTable?.getCheckboxRecords()
     batchOperateFlag.value = !!records?.length
   }
-  // 选中事件
+  /**
+   * 选中事件
+   */
   function selectChangeEvent() {
     const records = xTable?.getCheckboxRecords()
     batchOperateFlag.value = !!records?.length
