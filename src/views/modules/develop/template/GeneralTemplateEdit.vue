@@ -3,78 +3,79 @@
     showFooter
     v-bind="$attrs"
     width="40%"
-    :loading="confirmLoading"
     :title="title"
     :destroyOnClose="true"
     :maskClosable="false"
     :visible="visible"
     @close="handleCancel"
   >
-    <a-form
-      class="small-from-item"
-      ref="formRef"
-      :model="form"
-      :rules="rules"
-      :validate-trigger="['blur', 'change']"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
-    >
-      <a-form-item label="主键" name="id" :hidden="true">
-        <a-input v-model:value="form.id" :disabled="showable" />
-      </a-form-item>
-      <a-form-item label="模板代码" name="code">
-        <a-input v-model:value="form.code" :disabled="showable" placeholder="请输入模板代码" />
-      </a-form-item>
-      <a-form-item label="模板名称" name="name">
-        <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入模板名称" />
-      </a-form-item>
-      <a-form-item label="模板文件" name="fileId">
-        <a-upload
-          v-if="!form.fileId"
-          :disabled="showable"
-          name="file"
-          :multiple="false"
-          :action="uploadAction"
-          :headers="tokenHeader"
-          @change="handleChange"
-          :showUploadList="false"
-        >
-          <a-button type="primary" preIcon="carbon:cloud-upload"> 模板文件上传 </a-button>
-        </a-upload>
-        <a-input v-else defaultValue="模板文件" disabled>
-          <template #addonAfter v-if="!showable">
-            <a-tooltip>
-              <template #title> 删除上传的模板文件 </template>
-              <icon @click="removeFile" icon="ant-design:close-circle-outlined" :size="20" />
-            </a-tooltip>
-          </template>
-        </a-input>
-      </a-form-item>
-      <a-form-item label="使用类型" name="useType">
-        <a-select v-model:value="form.useType" :disabled="showable" :options="useTypes" placeholder="请选择数据库类型" />
-      </a-form-item>
-      <a-form-item label="是否启用" name="state">
-        <a-switch
-          :disabled="showable"
-          checked-children="是"
-          checked-value="enable"
-          un-checked-children="否"
-          un-checked-value="disable"
-          v-model:checked="form.state"
-        />
-      </a-form-item>
-      <template v-if="form.fileId">
-        <a-form-item label="文件类型" name="fileType">
-          <a-input disabled v-model:value="form.fileType" />
+    <a-spin :spinning="confirmLoading">
+      <a-form
+        class="small-from-item"
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        :validate-trigger="['blur', 'change']"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+      >
+        <a-form-item label="主键" name="id" :hidden="true">
+          <a-input v-model:value="form.id" :disabled="showable" />
         </a-form-item>
-        <a-form-item label="模板后缀名" name="fileSuffix">
-          <a-input disabled v-model:value="form.fileSuffix" />
+        <a-form-item label="模板代码" name="code">
+          <a-input v-model:value="form.code" :disabled="showable" placeholder="请输入模板代码" />
         </a-form-item>
-        <a-form-item label="备注" name="remark">
-          <a-textarea :rows="3" v-model:value="form.remark" :disabled="showable" placeholder="请输入备注" />
+        <a-form-item label="模板名称" name="name">
+          <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入模板名称" />
         </a-form-item>
-      </template>
-    </a-form>
+        <a-form-item label="模板文件" name="fileId">
+          <a-upload
+            v-if="!form.fileId"
+            :disabled="showable"
+            name="file"
+            :multiple="false"
+            :action="uploadAction"
+            :headers="tokenHeader"
+            @change="handleChange"
+            :showUploadList="false"
+          >
+            <a-button type="primary" preIcon="carbon:cloud-upload"> 模板文件上传 </a-button>
+          </a-upload>
+          <a-input v-else defaultValue="模板文件" disabled>
+            <template #addonAfter v-if="!showable">
+              <a-tooltip>
+                <template #title> 删除上传的模板文件 </template>
+                <icon @click="removeFile" icon="ant-design:close-circle-outlined" :size="20" />
+              </a-tooltip>
+            </template>
+          </a-input>
+        </a-form-item>
+        <a-form-item label="使用类型" name="useType">
+          <a-select v-model:value="form.useType" :disabled="showable" :options="useTypes" placeholder="请选择数据库类型" />
+        </a-form-item>
+        <a-form-item label="是否启用" name="state">
+          <a-switch
+            :disabled="showable"
+            checked-children="是"
+            checked-value="enable"
+            un-checked-children="否"
+            un-checked-value="disable"
+            v-model:checked="form.state"
+          />
+        </a-form-item>
+        <template v-if="form.fileId">
+          <a-form-item label="文件类型" name="fileType">
+            <a-input disabled v-model:value="form.fileType" />
+          </a-form-item>
+          <a-form-item label="模板后缀名" name="fileSuffix">
+            <a-input disabled v-model:value="form.fileSuffix" />
+          </a-form-item>
+          <a-form-item label="备注" name="remark">
+            <a-textarea :rows="3" v-model:value="form.remark" :disabled="showable" placeholder="请输入备注" />
+          </a-form-item>
+        </template>
+      </a-form>
+    </a-spin>
     <template #footer>
       <a-space>
         <a-button key="cancel" @click="handleCancel">取消</a-button>
@@ -175,9 +176,8 @@
       get(id).then(({ data }) => {
         form = data
         confirmLoading.value = false
+        console.log(confirmLoading.value)
       })
-    } else {
-      confirmLoading.value = false
     }
   }
   /**

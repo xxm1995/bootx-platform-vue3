@@ -27,6 +27,9 @@
                   <a-menu-item>
                     <a @click="lockUserConfirmBatch(false)">解锁账号</a>
                   </a-menu-item>
+                  <a-menu-item>
+                    <a @click="resetPwdBatch(false)">重置密码</a>
+                  </a-menu-item>
                 </a-menu>
               </template>
             </a-dropdown>
@@ -102,6 +105,7 @@
       <user-edit ref="userEdit" @ok="queryPage" />
       <user-show ref="userShow" />
       <user-reset-pwd ref="userResetPwd" />
+      <user-reset-pwd-batch ref="userResetPwdBatch" />
       <user-role-assign ref="userRoleAssign" />
       <user-role-assign-batch ref="userRoleAssignBatch" />
       <user-data-scope-assign ref="userDataScopeAssign" />
@@ -133,6 +137,7 @@
   import UserDeptAssign from './dept/UserDeptAssign.vue'
   import UserDeptAssignBatch from './dept/UserDeptAssignBatch.vue'
   import UserResetPwd from './UserResetPwd.vue'
+  import UserResetPwdBatch from "./UserResetPwdBatch.vue";
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading, batchOperateFlag } =
@@ -157,6 +162,7 @@
   let userDeptAssign = $ref<any>()
   let userDeptAssignBatch = $ref<any>()
   let userResetPwd = $ref<any>()
+  let userResetPwdBatch = $ref<any>()
 
   onMounted(() => {
     vxeBind()
@@ -262,7 +268,7 @@
     userAdd.init()
   }
   /**
-   * 查看信心
+   * 查看信息
    */
   function show(record) {
     userShow.init(record.id)
@@ -278,6 +284,13 @@
    */
   function resetPwd(record) {
     userResetPwd.init(record.id)
+  }
+  /**
+   * 重置密码
+   */
+  function resetPwdBatch() {
+    const userIds = xTable?.getCheckboxRecords().map((o) => o.id)
+    userResetPwdBatch.init(userIds)
   }
 </script>
 

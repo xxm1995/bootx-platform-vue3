@@ -59,6 +59,16 @@ export function restartPassword(userId, newPassword) {
     params: { userId, newPassword },
   })
 }
+/**
+ * 批量重置密码
+ */
+export function restartPasswordBatch(userIds, newPassword) {
+  return defHttp.post({
+    url: '/user/admin/restartPasswordBatch',
+    data: userIds,
+    params: { newPassword },
+  })
+}
 
 /**
  * 锁定用户
