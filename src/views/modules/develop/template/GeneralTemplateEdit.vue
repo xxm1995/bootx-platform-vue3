@@ -163,8 +163,8 @@
   /**
    * 初始化数据
    */
-  function initData() {
-    useTypes = dictDropDown('GeneralTemplateUseType')
+  async function initData() {
+    useTypes = await dictDropDown('GeneralTemplateUseType')
   }
 
   /**

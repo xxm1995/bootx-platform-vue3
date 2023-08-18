@@ -87,7 +87,7 @@
   const { notification, createMessage, createConfirm } = useMessage()
   const { dictConvert, dictDropDownNumber } = useDict()
 
-  let politicalList = $ref<LabeledValue[]>(dictDropDownNumber('Political'))
+  let politicalList = $ref<LabeledValue[]>([])
 
   // 查询条件
   const fields = [
@@ -114,6 +114,16 @@
     vxeBind()
     queryPage()
   })
+
+  /**
+   * 初始化
+   */
+  function init() {
+    vxeBind()
+    queryPage()
+    dictDropDownNumber('Political').then((res) => (politicalList = res))
+  }
+
   function vxeBind() {
     xTable?.connect(xToolbar as VxeToolbarInstance)
   }

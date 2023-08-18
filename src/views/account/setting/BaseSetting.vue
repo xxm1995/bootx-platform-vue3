@@ -95,7 +95,7 @@
   async function init() {
     confirmLoading = true
     // 初始化角色下拉菜单
-    sexList = dictDropDownNumber('Sex')
+    sexList = await dictDropDownNumber('Sex')
 
     const { data: userInfo } = await getUserBaseInfo()
     // 设置头像

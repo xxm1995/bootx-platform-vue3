@@ -60,6 +60,7 @@
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { BasicModal } from '/@/components/Modal'
   import { useDict } from '/@/hooks/bootx/useDict'
+  import { LabeledValue } from "ant-design-vue/lib/select";
   const {
     initFormEditType,
     handleCancel,
@@ -99,13 +100,14 @@
     political: [{ required: true, message: '请选择政治面貌' }],
   } as Record<string, Rule[]>)
 
-  const politicalList = $ref(dictDropDownNumber('Political'))
+  let politicalList = $ref<LabeledValue[]>([])
 
   // 事件
   const emits = defineEmits(['ok'])
   // 入口
   function init(id, editType: FormEditType) {
     initFormEditType(editType)
+    dictDropDownNumber('Political').then((res) => (politicalList = res))
     resetForm()
     getInfo(id, editType)
   }
