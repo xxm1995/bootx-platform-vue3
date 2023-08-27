@@ -20,26 +20,23 @@
       <a-form-item label="主键" name="id" :hidden="true">
         <a-input v-model:value="form.id" :disabled="showable" />
       </a-form-item>
-      <a-form-item label="名称" name="name">
-        <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入名称" />
+      <a-form-item label="敏感词" name="word">
+        <a-input v-model:value="form.word" :disabled="showable" placeholder="请输入敏感词" />
       </a-form-item>
-      <a-form-item label="年龄" name="age">
-        <a-input-number v-model:value="form.age" :disabled="showable" :precision="0" />
+      <a-form-item label="分类" name="type">
+        <a-input v-model:value="form.type" :disabled="showable" placeholder="请输入分类" />
       </a-form-item>
-      <a-form-item label="是否vip" name="vip">
-        <a-switch :disabled="showable" checkedChildren="是" unCheckedChildren="否" v-model:checked="form.vip" />
+      <a-form-item label="类型" name="white">
+        <a-select v-model:value="form.white" :disabled="showable" placeholder="请选择敏感词类型">
+          <a-select-option value="false">黑名单</a-select-option>
+          <a-select-option value="true">白名单</a-select-option>
+        </a-select>
       </a-form-item>
-      <a-form-item label="生日" name="birthday">
-        <a-date-picker placeholder="请选择日期" valueFormat="YYYY-MM-DD" :disabled="showable" v-model:value="form.birthday" />
+      <a-form-item label="是否启用" name="enable">
+        <a-switch checked-children="是" un-checked-children="否" v-model:checked="form.enable" />
       </a-form-item>
-      <a-form-item label="上班时间" name="workTime">
-        <a-time-picker placeholder="请选择时间" valueFormat="HH:mm:ss" :disabled="showable" v-model:value="form.workTime" />
-      </a-form-item>
-      <a-form-item label="政治面貌" name="political">
-        <a-select v-model:value="form.political" :disabled="showable" :options="politicalList" placeholder="请选择政治面貌" />
-      </a-form-item>
-      <a-form-item label="备注" name="remark">
-        <a-textarea v-model:value="form.remark" :disabled="showable" placeholder="请输入备注" />
+      <a-form-item label="描述" name="description">
+        <a-textarea :row="3" v-model:value="form.description" :disabled="showable" placeholder="请输入描述" />
       </a-form-item>
     </a-form>
     <template #footer>
@@ -55,12 +52,11 @@
   import { nextTick, reactive } from 'vue'
   import { $ref } from 'vue/macros'
   import useFormEdit from '/@/hooks/bootx/useFormEdit'
-  import { add, get, update, SuperQuery } from './SuperQueryDemo.api'
+  import { add, get, update, ChinaWord } from './ChinaWord.api'
   import { FormInstance, Rule } from 'ant-design-vue/lib/form'
   import { FormEditType } from '/@/enums/formTypeEnum'
-  import { BasicModal } from '/@/components/Modal'
-  import { useDict } from '/@/hooks/bootx/useDict'
-  import { LabeledValue } from "ant-design-vue/lib/select";
+  import { BasicModal } from '/src/components/Modal'
+  import { databaseTypes } from '/@/views/modules/develop/dynamicsource/DynamicDataSource.api'
   const {
     initFormEditType,
     handleCancel,
@@ -75,43 +71,37 @@
     showable,
     formEditType,
   } = useFormEdit()
-
-  const { dictDropDownNumber } = useDict()
   // 表单
   const formRef = $ref<FormInstance>()
-  let form = $ref<SuperQuery>({
+  let form = $ref<ChinaWord>({
     id: null,
-    name: '',
-    age: 18,
-    vip: true,
-    birthday: '',
-    workTime: '',
-    registrationTime: '',
-    political: 13,
-    remark: '',
+    word: '',
+    type: '',
+    description: '',
+    enable: true,
+    white: 'false',
   })
   // 校验
   const rules = reactive({
-    name: [{ required: true, message: '请输入名称' }],
-    age: [{ required: true, message: '请输入年龄' }],
-    vip: [{ required: true, message: '请选择是否vip' }],
-    birthday: [{ required: true, message: '请选择出生日期' }],
-    workTime: [{ required: true, message: '请选择工作时间' }],
-    political: [{ required: true, message: '请选择政治面貌' }],
+    word: [{ required: true, message: '请输入敏感词' }],
+    enable: [{ required: true, message: '请选择是否启用' }],
+    white: [{ required: true, message: '请选择类型' }],
   } as Record<string, Rule[]>)
-
-  let politicalList = $ref<LabeledValue[]>([])
-
   // 事件
   const emits = defineEmits(['ok'])
-  // 入口
+
+  /**
+   * 入口
+   */
   function init(id, editType: FormEditType) {
     initFormEditType(editType)
-    dictDropDownNumber('Political').then((res) => (politicalList = res))
     resetForm()
     getInfo(id, editType)
   }
-  // 获取信息
+
+  /**
+   * 获取信息
+   */
   function getInfo(id, editType: FormEditType) {
     if ([FormEditType.Edit, FormEditType.Show].includes(editType)) {
       confirmLoading.value = true
@@ -123,7 +113,10 @@
       confirmLoading.value = false
     }
   }
-  // 保存
+
+  /**
+   * 保存
+   */
   function handleOk() {
     formRef?.validate().then(async () => {
       confirmLoading.value = true
@@ -138,7 +131,9 @@
     })
   }
 
-  // 重置表单
+  /**
+   * 重置表单
+   */
   function resetForm() {
     nextTick(() => {
       formRef?.resetFields()

@@ -96,7 +96,7 @@
     vueVersion: 'v3',
     corePack: '',
     editType: 'modal',
-    deleteType: 'popconfirm',
+    deleteType: 'confirm',
     paramPack: '',
     dtoPack: '',
     controllerPack: '',

@@ -44,10 +44,12 @@
             <span>
               <a href="javascript:" @click="edit(row)">编辑</a>
             </span>
-            <a-divider type="vertical" />
-            <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
-              <a href="javascript:" style="color: red">删除</a>
-            </a-popconfirm>
+            <template v-if="!row.internal">
+              <a-divider type="vertical" />
+              <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
+                <a href="javascript:" style="color: red">删除</a>
+              </a-popconfirm>
+            </template>
           </template>
         </vxe-column>
       </vxe-table>
