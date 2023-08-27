@@ -3,7 +3,7 @@ export enum PageEnum {
   BASE_LOGIN = '/login',
   // 个人设置
   ACCOUNT_SETTING = '/account/setting',
-  // 站内信界面 (后端修改了路由路径后, 这个也需要修改)
+  // 站内信界面
   SITE_MESSAGE = '/person/siteMessage',
   // 登陆后主页
   BASE_HOME = '/dashboard',
