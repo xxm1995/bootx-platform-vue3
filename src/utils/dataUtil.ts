@@ -41,7 +41,7 @@ export interface Tree {
  * @param fieldValue 要查询的字段值
  * @param fieldName 字段名称
  */
-export function findOneByField(list: any[], fieldValue: object, fieldName: string) {
+export function findOneByField(list: any, fieldValue: object, fieldName: string) {
   const item = unref(list)?.filter((o) => {
     return o[fieldName] === fieldValue
   })
