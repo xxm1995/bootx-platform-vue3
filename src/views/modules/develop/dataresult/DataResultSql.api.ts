@@ -7,7 +7,7 @@ import { BaseEntity } from '/#/web'
  */
 export function page(params) {
   return defHttp.get<Result<PageResult<QuerySql>>>({
-    url: '/query/sql/page',
+    url: '/data/result/page',
     params,
   })
 }
@@ -17,7 +17,7 @@ export function page(params) {
  */
 export function findAll() {
   return defHttp.get<Result<QuerySql[]>>({
-    url: '/query/sql/findAll',
+    url: '/data/result/findAll',
   })
 }
 
@@ -26,7 +26,7 @@ export function findAll() {
  */
 export function get(id) {
   return defHttp.get<Result<QuerySql>>({
-    url: '/query/sql/findById',
+    url: '/data/result/findById',
     params: { id },
   })
 }
@@ -36,7 +36,7 @@ export function get(id) {
  */
 export function add(obj: QuerySql) {
   return defHttp.post({
-    url: '/query/sql/add',
+    url: '/data/result/add',
     data: obj,
   })
 }
@@ -46,7 +46,7 @@ export function add(obj: QuerySql) {
  */
 export function update(obj: QuerySql) {
   return defHttp.post({
-    url: '/query/sql/update',
+    url: '/data/result/update',
     data: obj,
   })
 }
@@ -56,7 +56,7 @@ export function update(obj: QuerySql) {
  */
 export function del(id) {
   return defHttp.delete({
-    url: '/query/sql/delete',
+    url: '/data/result/delete',
     params: { id },
   })
 }
