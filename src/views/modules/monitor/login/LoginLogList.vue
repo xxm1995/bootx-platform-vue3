@@ -87,13 +87,13 @@
 
   // 删除条件
   let deleteDays = $ref<LabeledValue[]>([
-    { value: '3天之前', key: '3' },
-    { value: '7天之前', key: '7' },
-    { value: '30天之前', key: '30' },
-    { value: '60天之前', key: '60' },
-    { value: '90天之前', key: '90' },
-    { value: '180天之前', key: '180' },
-    { value: '350天之前', key: '350' },
+    { label: '3天之前', value: '3' },
+    { label: '7天之前', value: '7' },
+    { label: '30天之前', value: '30' },
+    { label: '60天之前', value: '60' },
+    { label: '90天之前', value: '90' },
+    { label: '180天之前', value: '180' },
+    { label: '365天之前', value: '365' },
   ])
   // 查询条件
   const fields = computed(() => {
@@ -121,6 +121,7 @@
    */
   function initClientAndLoginType() {
     findClients().then(({ data }) => {
+      console.log(data)
       clients = data
     })
     findLoginTypes().then(({ data }) => {
