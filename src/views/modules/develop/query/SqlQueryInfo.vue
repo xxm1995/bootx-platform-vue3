@@ -4,12 +4,13 @@
       <a-textarea v-model:value="sql" show-count allow-clear placeholder="请输入要查询的SQL" :auto-size="{ minRows: 3, maxRows: 10 }" />
       <a-space style="margin-top: 1.5em">
         <a-button type="primary" @click="query">查询</a-button>
-        <a-button @click="reset">重置</a-button>
+        <a-button type="default" @click="exportResult">导出</a-button>
+        <a-button danger @click="reset">重置</a-button>
       </a-space>
     </div>
     <div class="m-3 p-3 bg-white">
-      <vxe-toolbar ref="xToolbar" custom />
-      <vxe-table ref="xTable" :data="records" :loading="loading">
+      <vxe-toolbar ref="xToolbar" custom export />
+      <vxe-table ref="xTable" :data="records" :loading="loading" :export-config="{}">
         <vxe-column type="seq" width="60" />
         <vxe-column v-for="o in fields" :key="o" :field="o" :title="o" />
       </vxe-table>
@@ -19,9 +20,10 @@
 
 <script lang="ts" setup>
   import { $ref } from 'vue/macros'
-  import { querySql } from '/@/views/modules/develop/query/SqlQuery.api'
+  import { exportQueryResult, querySql } from '/@/views/modules/develop/query/SqlQuery.api'
   import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
   import { onMounted } from 'vue'
+  import { downloadByData } from '/@/utils/file/download'
 
   let sql = $ref<string>('')
   let loading = $ref(false)
@@ -40,6 +42,9 @@
     xTable?.connect(xToolbar as VxeToolbarInstance)
   }
 
+  /**
+   * 查询结果
+   */
   function query() {
     loading = true
     querySql(sql).then(({ data }) => {
@@ -48,6 +53,18 @@
       loading = false
     })
   }
+
+  /**
+   * 导出结果
+   */
+  function exportResult() {
+    loading = true
+    exportQueryResult(sql).then((response) => {
+      downloadByData(response, '查询结果.xlsx')
+      loading = false
+    })
+  }
+
 
   /**
    * 重置

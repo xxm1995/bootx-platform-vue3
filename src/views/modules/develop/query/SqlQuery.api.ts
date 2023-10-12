@@ -13,6 +13,17 @@ export function querySql(sql: string) {
 }
 
 /**
+ *  导出查询结果
+ */
+export function exportQueryResult(sql: string) {
+  return defHttp.post<BlobPart>({
+    url: '/data/result/exportQueryResult',
+    responseType: 'blob',
+    data: { sql },
+  })
+}
+
+/**
  * SQL查询语句
  */
 export interface SqlQueryResult extends BaseEntity {
