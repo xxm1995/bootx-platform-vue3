@@ -1,6 +1,3 @@
-// axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
-// The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
-
 import type { AxiosResponse } from 'axios'
 import { clone } from 'lodash-es'
 import type { RequestOptions, Result } from '/#/axios'
@@ -11,7 +8,6 @@ import { useGlobSetting } from '/@/hooks/setting'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum'
 import { isString } from '/@/utils/is'
-import { getToken } from '/@/utils/auth'
 import { setObjToUrlParams, deepMerge } from '/@/utils'
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog'
 import { useI18n } from '/@/hooks/web/useI18n'
@@ -19,16 +15,20 @@ import { joinTimestamp, formatRequestDate } from './helper'
 import { useUserStoreWithOut } from '/@/store/modules/user'
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry'
 
+/**
+ * axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
+ */
+
 const globSetting = useGlobSetting()
 const urlPrefix = globSetting.urlPrefix
 const { createMessage, createErrorModal } = useMessage()
 
 /**
- * @description: 数据处理，方便区分多种处理方式
+ * 数据处理，方便区分多种处理方式
  */
 const transform: AxiosTransform = {
   /**
-   * @description: 处理响应数据。如果数据不是预期格式，可直接抛出错误
+   * 处理响应数据。如果数据不是预期格式，可直接抛出错误
    */
   transformResponseHook: (res: AxiosResponse<Result>, options: RequestOptions) => {
     // 不进行任何处理，直接返回
@@ -48,8 +48,7 @@ const transform: AxiosTransform = {
       return rawData
     }
 
-    // 接收的通常是json的数据
-    //  这里 code，data，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
+    // 接收的通常是json的数据,这里 code，data，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, msg, traceId } = rawData
 
     // 这里逻辑可以根据项目进行修改
@@ -58,8 +57,7 @@ const transform: AxiosTransform = {
       return rawData
     }
 
-    // 在此处根据自己项目的实际情况对不同的code执行不同的操作
-    // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
+    // 在此处根据自己项目的实际情况对不同的code执行不同的操作, 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
     let timeoutMsg = ''
     const userStore = useUserStoreWithOut()
     switch (code) {
@@ -67,7 +65,7 @@ const transform: AxiosTransform = {
       case ResultEnum.NOT_LOGIN:
         timeoutMsg = '登录超时,请重新登录!'
         userStore.setToken(undefined)
-        userStore.logout(true)
+        userStore.logout(true).then()
         break
       default:
         if (msg) {
@@ -86,7 +84,9 @@ const transform: AxiosTransform = {
     throw new Error(timeoutMsg || '请求出错，请稍候重试')
   },
 
-  // 请求之前处理config
+  /**
+   * 请求之前处理config
+   */
   beforeRequestHook: (config, options) => {
     const { apiUrl, joinPrefix, joinParamsToUrl, formatDate, joinTime = true, urlPrefix } = options
     if (joinPrefix) {
@@ -96,6 +96,7 @@ const transform: AxiosTransform = {
     if (apiUrl && isString(apiUrl)) {
       config.url = `${apiUrl}${config.url}`
     }
+    // 请求参数和请求体藕最
     const params = config.params || {}
     const data = config.data || false
     formatDate && data && !isString(data) && formatRequestDate(data)
@@ -114,10 +115,6 @@ const transform: AxiosTransform = {
         if (Reflect.has(config, 'data') && config.data && (Object.keys(config.data).length > 0 || config.data instanceof FormData)) {
           config.data = data
           config.params = params
-        } else {
-          // 非GET请求如果没有提供data，则将params视为data (去除, 非GET也会进行普通参数请求)
-          // config.data = params
-          // config.params = undefined
         }
         if (joinParamsToUrl) {
           config.url = setObjToUrlParams(config.url as string, Object.assign({}, config.params, config.data))
@@ -132,11 +129,12 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 请求拦截器处理
+   * 请求拦截器处理
    */
   requestInterceptors: (config, options) => {
     // 请求之前处理config
-    const token = getToken()
+    const userStore = useUserStoreWithOut()
+    const token = userStore.getToken
     if (token && (config as Recordable)?.requestOptions?.withToken !== false) {
       // 添加 token 到请求头
       ;(config as Recordable).headers.AccessToken = token
@@ -145,14 +143,14 @@ const transform: AxiosTransform = {
   },
 
   /**
-   * @description: 响应拦截器处理
+   * 响应拦截器处理
    */
   responseInterceptors: (res: AxiosResponse<any>) => {
     return res
   },
 
   /**
-   * @description: 响应错误处理
+   * 响应错误处理
    */
   responseInterceptorsCatch: (axiosInstance: AxiosResponse, error: any) => {
     const { t } = useI18n()
@@ -166,15 +164,15 @@ const transform: AxiosTransform = {
 
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        errMessage = t('sys.api.apiTimeoutMessage')
+        errMessage = '接口请求超时,请刷新页面重试!'
       }
       if (err?.includes('Network Error')) {
-        errMessage = t('sys.api.networkExceptionMsg')
+        errMessage = '网络异常，请检查您的网络连接是否正常!'
       }
 
       if (errMessage) {
         if (errorMessageMode === 'modal') {
-          createErrorModal({ title: t('sys.api.errorTip'), content: errMessage })
+          createErrorModal({ title: '错误提示', content: errMessage })
         } else if (errorMessageMode === 'message') {
           createMessage.error(errMessage)
         }
@@ -197,6 +195,10 @@ const transform: AxiosTransform = {
   },
 }
 
+/**
+ * 创建请求用 Axios 对象
+ * @param opt
+ */
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
   return new VAxios(
     // 深度合并
@@ -251,11 +253,3 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
   )
 }
 export const defHttp = createAxios()
-
-// other api url
-// export const otherHttp = createAxios({
-//   requestOptions: {
-//     apiUrl: 'xxx',
-//     urlPrefix: 'xxx',
-//   },
-// });

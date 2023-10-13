@@ -13,6 +13,9 @@ const { notification } = useMessage()
 // websocket关闭
 let wsClose: WebSocket['close']
 
+/**
+ * 初始化用户是否加载
+ */
 export async function initWebSocket() {
   const userStore = useUserStoreWithOut()
   const token = userStore.getToken

@@ -1,5 +1,5 @@
 export enum PageEnum {
-  // 登录
+  // 登录页
   BASE_LOGIN = '/login',
   // 个人设置
   ACCOUNT_SETTING = '/account/setting',
@@ -9,6 +9,6 @@ export enum PageEnum {
   BASE_HOME = '/dashboard',
   // 异常页
   ERROR_PAGE = '/exception',
-  // error log page path
+  // 错误日志页面路径
   ERROR_LOG_PAGE = '/error-log/list',
 }
