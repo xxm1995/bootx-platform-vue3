@@ -7,6 +7,7 @@ import { EVENT_NOTICE, NOTIFICATION_ERROR, NOTIFICATION_INFO, NOTIFICATION_WARN 
 import { publishWsEvent } from '/@/logics/websocket/WebsocketNotice'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { findByParamKey } from '/@/api/common/Parameter'
+import { authEcho } from '/@/api/common/BaseApi.api'
 
 const { notification } = useMessage()
 
@@ -20,13 +21,15 @@ export async function initWebSocket() {
   const userStore = useUserStoreWithOut()
   const token = userStore.getToken
   const { data: wsUrl } = await findByParamKey('WebsocketServerUrl')
-  // TODO 判断token是否有效
-
+  // 判断token是否有效, 无效会自动退出
+  await authEcho('')
+  // 后端服务地址
   const serverUrl = `${wsUrl}/ws/user?AccessToken=${token}`
 
+  // 创建websocket实例
   const { close } = useWebSocket(serverUrl, {
-    autoReconnect: true,
-    heartbeat: true,
+    autoReconnect: true, //自动重新连接
+    heartbeat: true, // 心跳检测
     onMessage: onMessage,
     onConnected: () => {
       console.log('用户全局WebSocket连接成功')
