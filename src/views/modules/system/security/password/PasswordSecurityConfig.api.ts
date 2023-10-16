@@ -3,31 +3,11 @@ import { PageResult, Result } from '/#/axios'
 import { BaseEntity } from '/#/web'
 
 /**
- * 分页
+ * 获取配置
  */
-export function page(params) {
-  return defHttp.get<Result<PageResult<PasswordSecurityConfig>>>({
-    url: '/security/password/page',
-    params,
-  })
-}
-
-/**
- * 查询全部
- */
-export function findAll() {
-  return defHttp.get<Result<PasswordSecurityConfig[]>>({
-    url: '/security/password/findAll',
-  })
-}
-
-/**
- * 获取单条
- */
-export function get(id) {
+export function getDefault(){
   return defHttp.get<Result<PasswordSecurityConfig>>({
-    url: '/security/password/findById',
-    params: { id },
+    url: '/security/password/getDefault',
   })
 }
 
@@ -48,26 +28,6 @@ export function update(obj: PasswordSecurityConfig) {
   return defHttp.post({
     url: '/security/password/update',
     data: obj,
-  })
-}
-
-/**
- * 删除
- */
-export function del(id) {
-  return defHttp.delete({
-    url: '/security/password/delete',
-    params: { id },
-  })
-}
-
-/**
- * 批量删除
- */
-export function deleteBatch(ids) {
-  return defHttp.delete({
-    url: '/security/password/template/delete',
-    data: ids,
   })
 }
 

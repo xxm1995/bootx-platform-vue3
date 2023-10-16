@@ -51,6 +51,11 @@ const transform: AxiosTransform = {
     // 接收的通常是json的数据,这里 code，data，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
     const { code, msg, traceId } = rawData
 
+    // 如果返回值中连code都没有, 说明返回的不是结构体, 不继续向下进行处理
+    if (code === undefined) {
+      return
+    }
+
     // 这里逻辑可以根据项目进行修改
     const hasSuccess = rawData && Reflect.has(rawData, 'code') && code === ResultEnum.SUCCESS
     if (hasSuccess) {
