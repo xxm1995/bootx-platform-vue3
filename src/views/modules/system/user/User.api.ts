@@ -71,21 +71,21 @@ export function restartPasswordBatch(userIds, newPassword) {
 }
 
 /**
- * 锁定用户
+ * 封禁用户
  */
-export function lockUser(userId) {
+export function banUser(userId) {
   return defHttp.post({
-    url: '/user/admin/lock',
+    url: '/user/admin/ban',
     params: { userId },
   })
 }
 
 /**
- * 锁定用户 批量
+ * 封禁用户 批量
  */
-export function lockUserBatch(userIds) {
+export function banUserBatch(userIds) {
   return defHttp.post({
-    url: '/user/admin/lockBatch',
+    url: '/user/admin/banUserBatch',
     data: userIds,
   })
 }

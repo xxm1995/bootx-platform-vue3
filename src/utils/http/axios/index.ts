@@ -14,6 +14,7 @@ import { useI18n } from '/@/hooks/web/useI18n'
 import { joinTimestamp, formatRequestDate } from './helper'
 import { useUserStoreWithOut } from '/@/store/modules/user'
 import { AxiosRetry } from '/@/utils/http/axios/axiosRetry'
+import { getAppEnvConfig } from "/@/utils/env";
 
 /**
  * axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
@@ -205,6 +206,8 @@ const transform: AxiosTransform = {
  * @param opt
  */
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
+  const { VITE_GLOB_API_TIMEOUT } = getAppEnvConfig()
+  console.log(VITE_GLOB_API_TIMEOUT)
   return new VAxios(
     // 深度合并
     deepMerge(
@@ -213,7 +216,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
         // authentication schemes，e.g: Bearer
         // authenticationScheme: 'Bearer',
         authenticationScheme: '',
-        timeout: 10 * 1000,
+        timeout: VITE_GLOB_API_TIMEOUT,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
