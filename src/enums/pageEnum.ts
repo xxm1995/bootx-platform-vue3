@@ -12,3 +12,8 @@ export enum PageEnum {
   // 错误日志页面路径
   ERROR_LOG_PAGE = '/error-log/list',
 }
+
+export const PageConstant = {
+  // 个人修改密码设置路由
+  ACCOUNT_PASSWORD: { path: PageEnum.ACCOUNT_SETTING, query: { activeKey: 2 } },
+}

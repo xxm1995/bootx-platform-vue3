@@ -1,6 +1,8 @@
 import { checkPasswordSecurity } from '/@/views/security/remind/UserRemind.api'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { Modal } from 'ant-design-vue'
+import { router } from '/@/router'
+import { PageConstant, PageEnum } from '/@/enums/pageEnum'
 
 /**
  * 用户密码检查
@@ -16,20 +18,20 @@ export async function userPassWordCheck(): Promise<boolean> {
       okText: '去修改',
       keyboard: false,
       onOk: () => {
-        createMessage.success('开发中...')
+        router.push(PageConstant.ACCOUNT_PASSWORD)
       },
     })
     return false
   }
   // 检查密码是否已经过期
-  if (!data.expirePwd) {
+  if (data.expirePwd) {
     Modal.warning({
       title: '警告',
       content: '密码已经过期，请进行修改',
       okText: '去修改',
       keyboard: false,
       onOk: () => {
-        createMessage.success('开发中...')
+        router.push(PageConstant.ACCOUNT_PASSWORD)
       },
     })
     return false
@@ -43,7 +45,7 @@ export async function userPassWordCheck(): Promise<boolean> {
       okText: '去修改',
       cancelText: '暂不修改',
       onOk: () => {
-        createMessage.success('开发中...')
+        router.push(PageConstant.ACCOUNT_PASSWORD)
       },
     })
     return false

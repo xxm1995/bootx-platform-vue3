@@ -10,7 +10,6 @@ const dictStore = useDictStore()
 async function getDict(): Promise<Dict[]> {
   const dictList = dictStore.getDict
   if (dictList.length > 0) {
-    console.log(dictList)
     return dictList
   } else {
     return await dictStore.initDict()

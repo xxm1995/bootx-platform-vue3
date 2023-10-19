@@ -14,19 +14,9 @@ export function getDefault(){
 /**
  * 添加
  */
-export function add(obj: PasswordSecurityConfig) {
+export function addOrUpdate(obj: PasswordSecurityConfig) {
   return defHttp.post({
-    url: '/security/password/add',
-    data: obj,
-  })
-}
-
-/**
- * 更新
- */
-export function update(obj: PasswordSecurityConfig) {
-  return defHttp.post({
-    url: '/security/password/update',
+    url: '/security/password/addOrUpdate',
     data: obj,
   })
 }
