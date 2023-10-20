@@ -49,9 +49,9 @@
         <vxe-column field="username" title="账号" />
         <vxe-column field="phone" title="手机号" />
         <vxe-column field="email" title="邮箱" />
-        <vxe-column field="admin" title="是否管理员">
+        <vxe-column field="administrator" title="是否管理员">
           <template #default="{ row }">
-            <a-tag v-if="row.admin" color="green">是</a-tag>
+            <a-tag v-if="row.administrator" color="green">是</a-tag>
             <a-tag v-else color="red">否</a-tag>
           </template>
         </vxe-column>

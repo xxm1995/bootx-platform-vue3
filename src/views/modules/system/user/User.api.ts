@@ -59,6 +59,7 @@ export function restartPassword(userId, newPassword) {
     params: { userId, newPassword },
   })
 }
+
 /**
  * 批量重置密码
  */
@@ -127,8 +128,7 @@ export interface UserInfo extends BaseEntity {
   // 邮箱
   email?: string
   // 关联终端
-  clientIds?: string
-  clientIdList?: string[]
+  clientIds?: string[]
   // 注册来源
   source?: string
   // 是否超级管理员
