@@ -207,7 +207,6 @@ const transform: AxiosTransform = {
  */
 function createAxios(opt?: Partial<CreateAxiosOptions>) {
   const { VITE_GLOB_API_TIMEOUT } = getAppEnvConfig()
-  console.log(VITE_GLOB_API_TIMEOUT)
   return new VAxios(
     // 深度合并
     deepMerge(

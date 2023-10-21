@@ -2,7 +2,7 @@ import { checkPasswordSecurity } from '/@/views/security/remind/UserRemind.api'
 import { useMessage } from '/@/hooks/web/useMessage'
 import { Modal } from 'ant-design-vue'
 import { router } from '/@/router'
-import { PageConstant, PageEnum } from '/@/enums/pageEnum'
+import { PageConstant } from '/@/enums/pageEnum'
 
 /**
  * 用户密码检查
