@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div class="m-3 p-3 pt-5 bg-white">
@@ -58,9 +59,9 @@
 <script lang="ts" setup>
   import { onMounted } from 'vue'
   import { $ref } from 'vue/macros'
-  import { del, page } from './QuerySql.api'
+  import { del, page } from './DataResultSql.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
-  import QuerySqlEdit from './QuerySqlEdit.vue'
+  import QuerySqlEdit from './DataResultSqlEdit.vue'
   import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
   import BQuery from '/@/components/Bootx/Query/BQuery.vue'
   import { FormEditType } from '/@/enums/formTypeEnum'
