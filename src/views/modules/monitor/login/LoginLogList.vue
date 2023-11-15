@@ -142,7 +142,6 @@
       ...model.queryParam,
       ...pages,
     }).then(({ data }) => {
-      data.records[0].loginTime
       pageQueryResHandel(data)
     })
   }
