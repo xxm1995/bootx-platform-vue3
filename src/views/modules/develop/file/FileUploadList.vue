@@ -20,14 +20,16 @@
       </vxe-toolbar>
       <vxe-table row-id="id" ref="xTable" :data="pagination.records" :loading="loading">
         <vxe-column type="seq" width="60" />
-        <vxe-column field="fileName" title="文件名称" />
-        <vxe-column field="fileSuffix" title="文件后缀" />
-        <vxe-column field="fileType" title="文件类型" />
+        <vxe-column field="originalFilename" title="原始文件名" />
+        <vxe-column field="ext" title="文件后缀" />
+        <vxe-column field="contentType" title="文件类型" />
         <vxe-column field="fileSize" title="文件大小" />
         <vxe-column field="createTime" title="创建时间" />
-        <vxe-column fixed="right" width="150" :showOverflow="false" title="操作">
+        <vxe-column fixed="right" width="200" :showOverflow="false" title="操作">
           <template #default="{ row }">
             <a href="javascript:" @click="show(row)">查看</a>
+            <a-divider type="vertical" />
+            <a href="javascript:" @click="preview(row)">预览</a>
             <a-divider type="vertical" />
             <a href="javascript:" @click="down(row)">下载</a>
             <a-divider type="vertical" />
@@ -112,10 +114,17 @@
     })
     return Promise.resolve()
   }
+
   /**
    * 查看
    */
-  function show(record) {
+  function show(){
+
+  }
+  /**
+   * 预览
+   */
+  function preview(record) {
     getFilePreviewUrl(record.id).then((res) => {
       window.open(res.data)
     })
