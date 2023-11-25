@@ -60,7 +60,6 @@
             {{ dictConvert('UserStatusCode', row.status) }}
           </template>
         </vxe-column>
-        <vxe-column field="registerTime" title="注册时间" />
         <vxe-column fixed="right" width="170" :showOverflow="false" title="操作">
           <template #default="{ row }">
             <a href="javascript:" @click="show(row)">查看</a>
@@ -83,7 +82,7 @@
                   <a-menu-item>
                     <a @click="resetPwd(row)">重置密码</a>
                   </a-menu-item>
-                  <a-menu-item>
+                  <a-menu-item v-if="[1, 3].includes(row.status)">
                     <a v-if="row.status === 1" @click="lockUserConfirm(row.id, true)">封禁账号</a>
                     <a v-if="row.status === 3" @click="lockUserConfirm(row.id, false)">解锁账号</a>
                   </a-menu-item>

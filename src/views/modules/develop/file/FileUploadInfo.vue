@@ -12,6 +12,7 @@
   import { DescItem, Description } from '/@/components/Description'
   import { UpdateFileInfo } from '/@/api/common/FileUpload'
   import { get } from '/@/views/modules/develop/file/FileUpload.api'
+  import { $ref } from 'vue/macros'
 
   let data = $ref<UpdateFileInfo>({})
   let confirmLoading = $ref<boolean>(false)

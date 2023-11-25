@@ -95,7 +95,7 @@
 
   // 获取用户关联终端信息
   function getClientList() {
-    const clientIds = form.clientIdList as string[]
+    const clientIds = form.clientIds as string[]
     return clientIds.map((clientId) => {
       return getClientById(clientId)
     })
