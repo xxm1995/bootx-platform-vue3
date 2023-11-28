@@ -77,7 +77,7 @@
                     <a @click="assignDept(row)">部门分配</a>
                   </a-menu-item>
                   <a-menu-item>
-                    <a @click="assignDataScope(row)">数据权限分配</a>
+                    <a @click="assignDataScope(row)">数据角色分配</a>
                   </a-menu-item>
                   <a-menu-item>
                     <a @click="resetPwd(row)">重置密码</a>
@@ -131,8 +131,8 @@
   import UserShow from './UserShow.vue'
   import UserRoleAssign from './role/UserRoleAssign.vue'
   import UserRoleAssignBatch from './role/UserRoleAssignBatch.vue'
-  import UserDataScopeAssign from './scope/UserDataScopeAssign.vue'
-  import UserDataScopeAssignBatch from './scope/UserDataScopeAssignBatch.vue'
+  import UserDataScopeAssign from '/@/views/modules/system/user/data/UserDataRoleAssign.vue'
+  import UserDataScopeAssignBatch from '/@/views/modules/system/user/data/UserDataRoleAssignBatch.vue'
   import UserDeptAssign from './dept/UserDeptAssign.vue'
   import UserDeptAssignBatch from './dept/UserDeptAssignBatch.vue'
   import UserResetPwd from './UserResetPwd.vue'

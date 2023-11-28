@@ -7,7 +7,7 @@ const scopes = fs
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name.replace(/s$/, ''))
 
-// precomputed scope
+// precomputed data
 const scopeComplete = execSync('git status --porcelain || true')
   .toString()
   .trim()
@@ -59,7 +59,7 @@ module.exports = {
     // 中英文对照版
     // messages: {
     //   type: '选择你要提交的类型 :',
-    //   scope: '选择一个提交范围 (可选):',
+    //   data: '选择一个提交范围 (可选):',
     //   customScope: '请输入自定义的提交范围 :',
     //   subject: '填写简短精炼的变更描述 :\n',
     //   body: '填写更加详细的变更描述 (可选)。使用 "|" 换行 :\n',
