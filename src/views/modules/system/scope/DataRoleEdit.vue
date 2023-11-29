@@ -96,7 +96,8 @@
    * 入口
    */
   async function init(id, editType: FormEditType) {
-    dataScopeTypes = await dictDropDown('DataScopePerm').then()
+    dataScopeTypes = await dictDropDown('DataScopePerm')
+    console.log(dataScopeTypes)
     initFormEditType(editType)
     resetForm()
     getInfo(id, editType)

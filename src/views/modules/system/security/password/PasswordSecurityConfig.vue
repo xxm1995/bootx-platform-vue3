@@ -97,7 +97,14 @@
   const formRef = $ref<FormInstance>()
   let edit = $ref(false)
 
-  const rules = reactive({} as Record<string, Rule[]>)
+  const rules = reactive({
+    maxPwdErrorCount: [{ required: true, message: '请输入最大密码错误数', trigger: 'blur' }],
+    errorLockTime: [{ required: true, message: '请输入密码错误锁定时间(分钟)', trigger: 'blur' }],
+    updateFrequency: [{ required: true, message: '请输入密码更新频率(天)', trigger: 'blur' }],
+    expireRemind: [{ required: true, message: '请输入到期提醒(天)', trigger: 'blur' }],
+    recentPassword: [{ required: true, message: '请输入不能与近期多少次密码相同', trigger: 'blur' }],
+    sameAsLoginName: [{ required: true, message: '请选择是否允许密码与登录名相同', trigger: 'blur' }],
+  } as Record<string, Rule[]>)
 
   onMounted(() => initData())
 
@@ -117,12 +124,12 @@
    */
   async function update() {
     await formRef?.validate()
-    loading = true
     createConfirm({
       iconType: 'warning',
       title: '警告',
       content: '是否更新密码安全配置信息',
       onOk: async () => {
+        loading = true
         await addOrUpdate(form)
         createMessage.success('更新密码安全配置成功')
         initData()
