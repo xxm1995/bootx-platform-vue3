@@ -34,10 +34,8 @@
 
   function initWs() {
     // 建立连接对象
-    const userStore = useUserStore()
-    userId = userStore.getUserInfo.userId
     findByParamKey('WebsocketServerUrl').then(({ data: url }) => {
-      websocketUrl = url + '/test/ws/' + userId
+      websocketUrl = url + '/test/ws/'
       initWebSocket()
     })
   }

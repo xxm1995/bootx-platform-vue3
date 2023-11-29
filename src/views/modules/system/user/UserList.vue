@@ -19,7 +19,7 @@
                     <a @click="assignDeptBatch()">部门分配</a>
                   </a-menu-item>
                   <a-menu-item>
-                    <a @click="assignDataScopeBatch()">数据权限分配</a>
+                    <a @click="assignDataScopeBatch()">数据角色分配</a>
                   </a-menu-item>
                   <a-menu-item>
                     <a @click="lockUserConfirmBatch(true)">锁定账号</a>
