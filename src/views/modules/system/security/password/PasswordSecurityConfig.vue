@@ -71,8 +71,9 @@
           </a-row>
           <a-row>
             <a-col :push="8">
-              <a-button :disabled="!edit" type="primary" @click="update">保存信息</a-button>
-              <a-button style="margin-left: 50px" :disabled="edit" @click="edit = true">编辑信息</a-button>
+              <a-button v-if="edit" @click="initData">取消</a-button>
+              <a-button v-if="edit" style="margin-left: 50px" type="primary" @click="update">保存信息</a-button>
+              <a-button v-if="!edit" @click="edit = true">编辑信息</a-button>
             </a-col>
           </a-row>
         </a-form>
@@ -112,6 +113,7 @@
    * 初始化数据
    */
   function initData() {
+    edit = false
     loading = true
     getDefault().then(({ data }) => {
       form = data
@@ -131,6 +133,7 @@
       onOk: async () => {
         loading = true
         await addOrUpdate(form)
+        edit = false
         createMessage.success('更新密码安全配置成功')
         initData()
       },
