@@ -46,13 +46,13 @@
         </vxe-column>
       </vxe-table>
       <vxe-pager
-        size="medium"
-        :loading="loading"
-        :current-page="pagination.current"
-        :page-size="pagination.size"
-        :total="pagination.total"
-        @page-change="handleTableChange"
-      />
+      size="medium"
+      :loading="loading"
+      :current-page="pagination.current"
+      :page-size="pagination.size"
+      :total="pagination.total"
+      @page-change="handleTableChange"
+    />
       <login-log-info :clients="clients" :login-types="loginTypes" ref="loginLogInfo" />
     </div>
   </div>
