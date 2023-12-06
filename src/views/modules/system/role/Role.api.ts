@@ -11,6 +11,14 @@ export const page = (params) => {
     params,
   })
 }
+/**
+ * 分页
+ */
+export const tree = () => {
+  return defHttp.get<Result<RoleTree[]>>({
+    url: '/role/tree',
+  })
+}
 
 /**
  * 获取单条
@@ -147,11 +155,20 @@ export function findPathIdsByRole(roleId) {
  */
 export interface Role extends BaseEntity {
   // 编码
-  code: string
+  code?: string
+  // 父ID
+  pid?: number
   // 名称
-  name: string
+  name?: string
   // 是否系统内置
   internal?: boolean
   // 说明
-  remark: string
+  remark?: string
+}
+
+/**
+ * 角色树
+ */
+export interface RoleTree extends Role {
+  children?: RoleTree[]
 }

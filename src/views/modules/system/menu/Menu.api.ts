@@ -82,10 +82,10 @@ export const existsByPermCodeNotId = (permCode, id) => {
  * 菜单和权限码树
  * @param clientCode
  */
-export function allTree(clientCode) {
+export function allTree(roleId, clientCode) {
   return defHttp.get<Result<MenuTree[]>>({
     url: '/perm/menu/allTree',
-    params: { clientCode },
+    params: { roleId, clientCode },
   })
 }
 

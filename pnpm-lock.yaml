@@ -118,7 +118,7 @@ specifiers:
   vue-router: ^4.0.16
   vue-tsc: ^0.33.9
   vue-types: ^4.1.1
-  vxe-table: ^4.4.2
+  vxe-table: ^4.5.14
   xe-utils: ^3.5.7
   xlsx: ^0.18.5
 
@@ -161,7 +161,7 @@ dependencies:
   vue-json-pretty: 2.2.4_vue@3.3.4
   vue-router: 4.1.6_vue@3.3.4
   vue-types: 4.2.1_vue@3.3.4
-  vxe-table: 4.4.2_vue@3.3.4+xe-utils@3.5.7
+  vxe-table: 4.5.14_vue@3.3.4+xe-utils@3.5.7
   xe-utils: 3.5.7
   xlsx: 0.18.5
 
@@ -4858,6 +4858,10 @@ packages:
       domhandler: 5.0.3
       entities: 4.5.0
     dev: true
+
+  /dom-zindex/1.0.1:
+    resolution: {integrity: sha512-M/MERVDZ8hguvjl6MAlLWSLYLS7PzEyXaTb5gEeJ+SF+e9iUC0sdvlzqe91MMDHBoy+nqw7wKcUOrDSyvMCrRg==}
+    dev: false
 
   /dom7/3.0.0:
     resolution: {integrity: sha512-oNlcUdHsC4zb7Msx7JN3K0Nro1dzJ48knvBOnDPKJ2GV9wl1i5vydJZUSyOfrkKFDZEud/jBsTk92S/VGSAe/g==}
@@ -11003,12 +11007,13 @@ packages:
       vue: 3.3.4
     dev: false
 
-  /vxe-table/4.4.2_vue@3.3.4+xe-utils@3.5.7:
-    resolution: {integrity: sha512-3UdfSeMZ/D5nfTohcnZQQ2gkFZnhvf0v83usOCwx3B1nzBNKAJumg3QviMEox5SdikT8pq9z4vz3a0pesPPrJw==}
+  /vxe-table/4.5.14_vue@3.3.4+xe-utils@3.5.7:
+    resolution: {integrity: sha512-S+6pAYQsoY5DZj9qLXQLDKcA/+AO5CSrs9tGn+/By8WxYWJNLw3i5cjbXsriUaJeuj8Qi1aYfdhrNfeMCwE9Iw==}
     peerDependencies:
       vue: ^3.2.28
       xe-utils: ^3.5.0
     dependencies:
+      dom-zindex: 1.0.1
       vue: 3.3.4
       xe-utils: 3.5.7
     dev: false
