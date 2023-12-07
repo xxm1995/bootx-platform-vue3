@@ -57,7 +57,7 @@
         })
       })
       tableData = result
-      xTable.reloadData(tableData)
+      xTable?.reloadData(tableData)
       loading = false
     })
   }

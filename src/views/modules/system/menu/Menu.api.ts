@@ -79,12 +79,11 @@ export const existsByPermCodeNotId = (permCode, id) => {
 }
 
 /**
- * 菜单和权限码树
- * @param clientCode
+ * 获取当前用户角色下可见的菜单树
  */
-export function allTree(roleId, clientCode) {
+export function findTreeByRole(roleId, clientCode) {
   return defHttp.get<Result<MenuTree[]>>({
-    url: '/perm/menu/allTree',
+    url: '/perm/menu/findTreeByRole',
     params: { roleId, clientCode },
   })
 }

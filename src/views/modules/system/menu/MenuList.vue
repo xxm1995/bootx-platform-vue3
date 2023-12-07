@@ -114,7 +114,7 @@
   import { nextTick, onMounted } from 'vue'
   import { Client, findAll } from '/@/views/modules/system/client/Client.api'
   import XEUtils from 'xe-utils'
-  import { menuTree, Menu, del, allTree } from './Menu.api'
+  import { menuTree, Menu, del, findTreeByRole } from './Menu.api'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import MenuEdit from './MenuEdit.vue'
   import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
@@ -157,7 +157,7 @@
   async function queryPage() {
     loading = true
     if (showPermCode) {
-      const { data } = await allTree(clientCode)
+      const { data } = await findTreeByRole(clientCode)
       remoteTableData = data
     } else {
       const { data } = await menuTree(clientCode)
