@@ -130,12 +130,12 @@
         title: '警告',
         cancelText: '不应用',
         okText: '应用',
-        content: '是否将新分配的权限应用到子角色(删除的子角色将会被删除)',
+        content: '将新增的权限应用到下级子角色中，注意：删除权限时无论如何选择，都将会下级角色的权限被级联删除',
         onOk: () => {
           save(true)
         },
         onCancel: () => {
-          save(true)
+          save(false)
         },
       })
     } else {
